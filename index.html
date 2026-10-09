@@ -1749,13 +1749,16 @@ function createEnemy(type){
 
     const p=spawnPoint();
 
+    // Snellere moeilijkheidsgroei: vooral merkbaar vanaf wave 10.
+    const w=Math.max(1,game.wave);
     const scaleHp=
-        (1+game.wave*.18)*
-        (1+Math.pow(game.wave,.76)*.045);
+        (1+w*.22)*
+        (1+Math.pow(w,.82)*.06)*
+        Math.pow(1.018,w);
 
     const scaleDamage=
-        1+game.wave*.06+
-        Math.pow(game.wave,1.12)*.006;
+        (1+w*.085+Math.pow(w,1.12)*.01)*
+        Math.pow(1.012,w);
 
     const e={
 
@@ -1769,7 +1772,7 @@ function createEnemy(type){
         hp:d.hp*scaleHp,
         maxHp:d.hp*scaleHp,
 
-        speed:d.speed*(1+Math.min(1.5,game.wave*.012)),
+        speed:d.speed*(1+Math.min(2.2,game.wave*.018)),
 
         damage:d.damage*scaleDamage,
 
@@ -1846,13 +1849,11 @@ function createMiniBoss(name){
 
     const p=spawnPoint();
 
+    const w=Math.max(1,game.wave);
+    const bossRamp=(1+w*.035+Math.pow(w,1.12)*.018)*Math.pow(1.015,w);
     const hp=
-        (
-            9000+
-            game.wave*1550+
-            Math.pow(game.wave,1.30)*125
-        )*
-        (1+game.wave*.035);
+        (9000+w*1750+Math.pow(w,1.30)*150)*
+        (1+w*.035)*bossRamp;
 
     const e={
 
@@ -1868,9 +1869,9 @@ function createMiniBoss(name){
         hp,
         maxHp:hp,
 
-        speed:46+game.wave*.65,
+        speed:46+game.wave*.9,
 
-        damage:95+game.wave*5.5,
+        damage:(95+game.wave*6.5)*(1+game.wave*.025),
 
         color:"#ff9f3f",
 
@@ -1912,13 +1913,11 @@ function createBoss(name){
 
     const p=spawnPoint();
 
+    const w=Math.max(1,game.wave);
+    const bossRamp=(1+w*.045+Math.pow(w,1.15)*.022)*Math.pow(1.018,w);
     const hp=
-        (
-            52000+
-            game.wave*8200+
-            Math.pow(game.wave,1.38)*850
-        )*
-        (1+game.wave*.045);
+        (52000+w*9500+Math.pow(w,1.38)*1000)*
+        (1+w*.045)*bossRamp;
 
     const e={
 
@@ -1934,9 +1933,9 @@ function createBoss(name){
         hp,
         maxHp:hp,
 
-        speed:38+game.wave*.45,
+        speed:38+game.wave*.65,
 
-        damage:150+game.wave*9.5,
+        damage:(150+game.wave*11)*(1+game.wave*.03),
 
         color:"#ff315d",
 
