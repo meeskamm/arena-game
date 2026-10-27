@@ -305,25 +305,40 @@ button:active{transform:translateY(1px)}
 #challengeText{font-size:12px;color:#b9cfe0;margin-top:3px}
 #challengeProgress{height:7px;background:#102333;border-radius:99px;overflow:hidden;margin-top:7px}
 #challengeFill{height:100%;width:0;background:#ffe16b;transition:width .12s linear}
-#invasionBanner{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.85);z-index:32;opacity:0;pointer-events:none;text-align:center;font-size:32px;font-weight:1000;color:#ff6688;text-shadow:0 0 20px #ff245f,0 0 45px #ff245f;transition:opacity .2s,transform .2s}
+#invasionBanner{position:fixed;left:50%;top:43%;transform:translate(-50%,-50%) scale(.85);z-index:32;opacity:0;pointer-events:none;text-align:center;font-size:clamp(22px,4vw,38px);font-weight:1000;color:#ff6688;text-shadow:0 0 20px #ff245f,0 0 45px #ff245f;transition:opacity .2s,transform .2s;white-space:nowrap}
 #invasionBanner.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-#treeOverlay{position:fixed;inset:0;background:rgba(1,5,10,.82);z-index:50;display:flex;align-items:center;justify-content:center;padding:18px}
+#invasionStatus,#eventStatus{position:fixed;left:50%;transform:translateX(-50%);z-index:29;display:none;min-width:250px;max-width:min(540px,90vw);padding:8px 12px;border:1px solid #2b647b;border-radius:10px;background:rgba(4,14,24,.9);color:#d6f5ff;text-align:center;font-size:12px;font-weight:850;box-shadow:0 8px 28px #0005;pointer-events:none}
+#eventStatus{top:48px;border-color:#58bbd6}#invasionStatus{top:86px;border-color:#e44e80;color:#ffdce6}
+#eventStatus.show,#invasionStatus.show{display:block}
+#treeOverlay{position:fixed;inset:0;background:rgba(1,5,10,.88);z-index:50;display:flex;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(5px)}
 #treeOverlay.hidden{display:none}
-#treePanel{width:min(980px,96vw);max-height:92vh;overflow:auto;background:#06111c;border:1px solid #23718c;border-radius:18px;padding:18px;box-shadow:0 0 50px rgba(0,180,255,.15)}
+#treePanel{width:min(1120px,98vw);max-height:94vh;overflow:auto;background:linear-gradient(145deg,#071625,#030a12);border:1px solid #23718c;border-radius:18px;padding:18px;box-shadow:0 0 50px rgba(0,180,255,.15)}
 .treeTop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 .treeTitle{font-size:28px;font-weight:1000;color:#bff6ff}
 .treeSub{font-size:12px;color:#7691a4}
-.treeGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.treeBranch{border:1px solid #17374a;border-radius:14px;padding:12px;background:#071723}
-.treeBranch h3{margin:0 0 9px;color:#8cecff;font-size:15px}
-.treeNode{width:100%;text-align:left;border:1px solid #1d4052;border-radius:11px;background:#091d2a;color:#d9f6ff;padding:10px;margin:6px 0;cursor:pointer}
-.treeNode:hover{background:#0d2b3c}
-.treeNode.locked{opacity:.45;cursor:not-allowed}
-.treeNode.owned{border-color:#65ffb1;background:#0a281e}
-.treeNode b{display:block;font-size:13px}.treeNode span{display:block;font-size:11px;color:#7893a5;margin-top:3px}.treeCost{color:#ffd76a!important;margin-top:6px!important;font-weight:900}
-#highscoreBox{margin-top:14px;border-top:1px solid #17374a;padding-top:12px;color:#9fb5c5;font-size:12px}
-@media(max-width:900px){.treeGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.treeGrid{grid-template-columns:1fr}#expansionHUD{right:7px;top:150px}.expBtn{padding:8px}.treeTitle{font-size:22px}}
+.treeTabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px;border-bottom:1px solid #17374a;padding-bottom:12px}
+.treeTab{padding:9px 13px;border:1px solid #21495d;border-radius:9px;background:#091b29;color:#9bc7d8;font-weight:900;cursor:pointer}
+.treeTab.active{background:#0b3549;border-color:#50dfff;color:#e1fbff;box-shadow:0 0 18px #00bde722}
+#treeAccountBar{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
+.treeStat{padding:8px 11px;border:1px solid #183d50;border-radius:9px;background:#071a26;color:#9fb9ca;font-size:12px}
+.treeStat b{color:#ffe16b}
+.treeGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
+.treeBranch{border:1px solid #17374a;border-radius:14px;padding:11px;background:linear-gradient(180deg,#081b29,#06111b);min-width:0}
+.treeBranch h3{margin:0 0 4px;color:#8cecff;font-size:14px;line-height:1.25}
+.treeBranch .branchHint{color:#6f91a4;font-size:10px;margin-bottom:9px;min-height:26px}
+.treeNode{width:100%;text-align:left;border:1px solid #1d4052;border-radius:10px;background:#091d2a;color:#d9f6ff;padding:10px;margin:5px 0;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;overflow-wrap:anywhere}
+.treeNode:hover:not(:disabled){background:#0d2b3c;border-color:#48cce8;transform:translateY(-1px)}
+.treeNode:disabled{cursor:not-allowed}
+.treeNode.locked{opacity:.48}
+.treeNode.owned{border-color:#65ffb1;background:linear-gradient(120deg,#0a281e,#0b211e);opacity:1}
+.treeNode b{display:block;font-size:12px}.treeNode span{display:block;font-size:10px;line-height:1.35;color:#8ca7b8;margin-top:4px}.treeCost{color:#ffd76a!important;margin-top:7px!important;font-weight:900}
+#highscoreBox{margin-top:4px;color:#9fb5c5;font-size:12px}
+.scoreRows{list-style:none;margin:12px 0;padding:0;display:grid;gap:8px}
+.scoreRows li{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:9px;align-items:center;padding:10px;border:1px solid #18394b;border-radius:10px;background:#071723}
+.scoreRank{color:#ffe16b;font-size:18px;font-weight:1000}.scoreName{font-weight:900;color:#d7f5ff}.scoreMeta{font-size:11px;color:#86a3b5;margin-top:3px}.scorePoints{font-weight:1000;color:#7effbf;text-align:right}
+@media(max-width:1000px){.treeGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.treeGrid{grid-template-columns:repeat(2,minmax(0,1fr))}#treePanel{padding:12px}.treeTitle{font-size:22px}}
+@media(max-width:480px){.treeGrid{grid-template-columns:1fr}#expansionHUD{right:7px;top:150px}.expBtn{padding:8px}.treeTitle{font-size:22px}.scoreRows li{grid-template-columns:28px minmax(0,1fr)}.scorePoints{grid-column:2;text-align:left}}
 
 </style>
 </head>
@@ -382,15 +397,22 @@ button:active{transform:translateY(1px)}
   <div id="challengeText"></div>
   <div id="challengeProgress"><div id="challengeFill"></div></div>
 </div>
+<div id="eventStatus"></div>
+<div id="invasionStatus"></div>
 <div id="invasionBanner">⚠ INVASION ⚠</div>
 <div id="treeOverlay" class="hidden">
   <div id="treePanel">
     <div class="treeTop">
-      <div><div class="treeTitle">🌳 UPGRADE TREE</div><div class="treeSub">Koop permanente upgrades met geld. Vereisten moeten eerst worden vrijgespeeld.</div></div>
+      <div><div class="treeTitle" id="overlayTitle">🌳 UPGRADE TREE</div><div class="treeSub" id="overlaySubtitle">Vijf upgrade-takken. Koop upgrades met geld en speel sterkere nodes vrij.</div></div>
       <button class="expBtn" id="closeTree" type="button">SLUITEN [T]</button>
     </div>
-    <div id="treeGrid" class="treeGrid"></div>
-    <div id="highscoreBox"></div>
+    <div id="treeAccountBar"></div>
+    <div class="treeTabs">
+      <button class="treeTab active" id="treeTabUpgrade" type="button">🌳 UPGRADE TREE</button>
+      <button class="treeTab" id="treeTabScores" type="button">🏆 HIGH SCORES</button>
+    </div>
+    <div id="treeView"><div id="treeGrid" class="treeGrid"></div></div>
+    <div id="scoreView" hidden><div id="highscoreBox"></div></div>
   </div>
 </div>
 
@@ -6704,345 +6726,405 @@ requestAnimationFrame(loop);
 
 
 /* ============================================================
-   REAL EXPANSION SYSTEMS — CHALLENGES / ARENA EVENTS / INVASIONS
-   / UPGRADE TREE / HIGH SCORES / ENDLESS MODE
+   EXPANDED FEATURES — LIVE CHALLENGES, HAZARD ARENA, INVASIONS,
+   BRANCHING UPGRADE TREE, LOCAL HIGH SCORES, ENDLESS MODE
 ============================================================ */
 (function(){
     const $=id=>document.getElementById(id);
+    const HS_KEY="arena_upgrade_highscores_v3";
 
-    /* ---------- persistent high scores ---------- */
-    const HS_KEY="arena_upgrade_highscores_v2";
+    const featureState={
+        runTime:0,lastWave:0,challenge:null,challengeCooldown:0,
+        arenaEvent:null,arenaTimer:0,arenaX:0,arenaY:0,arenaR:0,
+        arenaPulseTimer:0,eventHazards:[],eventPlayerHitTimer:0,eventEnemyPulseTimer:0,
+        invasion:null,invasionQueue:0,invasionSpawnTimer:0,invasionSpawned:0,invasionTotal:0,
+        invasionActive:false,invasionClearPaid:false,
+        treeBought:{},endless:false,endlessUnlocked:false,scoreSaved:false
+    };
+
     function loadScores(){
         try{
-            const a=JSON.parse(localStorage.getItem(HS_KEY)||"[]");
-            return Array.isArray(a)?a:[];
-        }catch(e){ return []; }
+            const data=JSON.parse(localStorage.getItem(HS_KEY)||"[]");
+            return Array.isArray(data)?data.filter(s=>s&&Number.isFinite(+s.score)).slice(0,10):[];
+        }catch(e){return [];}
+    }
+    function formatTime(sec){sec=Math.max(0,Math.floor(+sec||0));return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0");}
+    function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+    function renderHighScores(){
+        const box=$("highscoreBox");if(!box)return;
+        const scores=loadScores();
+        box.innerHTML=scores.length?`<div class="small">Lokale records op deze browser</div><ol class="scoreRows">${scores.map((v,i)=>`<li><span class="scoreRank">${i+1}</span><div><div class="scoreName">${escapeHTML(v.name||"PLAYER")}</div><div class="scoreMeta">Wave ${Math.max(1,Math.floor(v.wave||1))} · ${Math.max(0,Math.floor(v.kills||0)).toLocaleString()} kills · ${formatTime(v.time)}</div></div><div class="scorePoints">${Math.floor(v.score).toLocaleString()} pts</div></li>`).join("")}</ol>`:`<div class="small" style="margin-top:8px">Nog geen records. Haal je eerste highscore!</div>`;
     }
     function saveScore(){
+        if(featureState.scoreSaved)return;featureState.scoreSaved=true;
         const scores=loadScores();
-        scores.push({
-            name:"PLAYER",
-            wave:game.wave,
-            kills:game.kills,
-            score:Math.floor(game.score),
-            time:Math.floor(featureState.runTime)
-        });
-        scores.sort((a,b)=>b.score-a.score);
-        try{localStorage.setItem(HS_KEY,JSON.stringify(scores.slice(0,10)));}catch(e){}
+        scores.push({name:"PLAYER",wave:game.wave,kills:game.kills,score:Math.floor(game.score),time:Math.floor(featureState.runTime),date:new Date().toISOString().slice(0,10)});
+        scores.sort((a,b)=>(+b.score||0)-(+a.score||0));
+        try{localStorage.setItem(HS_KEY,JSON.stringify(scores.slice(0,10)));}catch(e){toast("Highscore kon niet lokaal worden opgeslagen.");}
         renderHighScores();
     }
-    function formatTime(sec){
-        sec=Math.max(0,Math.floor(sec||0));
-        return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0");
-    }
-    function renderHighScores(){
-        const box=$("highscoreBox");
-        if(!box)return;
-        const scores=loadScores();
-        box.innerHTML="<b style='color:#ffe16b'>🏆 HIGH SCORES</b>"+
-            (scores.length?"<ol style='margin:8px 0 0 18px;padding:0'>"+
-            scores.map(s=>`<li><b>${s.name}</b> — Wave ${s.wave} • ${s.kills.toLocaleString()} kills • ${s.score.toLocaleString()} pts • ${formatTime(s.time)}</li>`).join("")+"</ol>":
-            "<div class='small' style='margin-top:7px'>Nog geen scores. Haal je eerste record!</div>");
-    }
-
-    /* ---------- state ---------- */
-    const featureState={
-        runTime:0,
-        lastWave:0,
-        challenge:null,
-        challengeCooldown:0,
-        invasionCooldown:12,
-        invasionActive:0,
-        invasionType:"",
-        arenaEvent:null,
-        arenaTimer:0,
-        arenaX:0,
-        arenaY:0,
-        arenaR:0,
-        treeBought:{},
-        endless:false,
-        endlessBestWave:0,
-        lastPlayerHp:500
-    };
 
     const CHALLENGES=[
         {id:"survive",name:"SURVIVE",desc:"Overleef 20 seconden.",target:20},
         {id:"kills",name:"KILL RUSH",desc:"Versla 35 vijanden.",target:35},
         {id:"untouched",name:"UNTOUCHABLE",desc:"Raak 18 seconden niet gewond.",target:18},
-        {id:"damage",name:"DESTROYER",desc:"Doe 12000 damage.",target:12000}
+        {id:"damage",name:"DESTROYER",desc:"Doe 12.000 damage.",target:12000}
     ];
 
     const INVASIONS=[
-        {name:"SWARM INVASION",type:"Runner",count:65,color:"#ff6688"},
-        {name:"TANK INVASION",type:"Tank",count:18,color:"#ff9d4d"},
-        {name:"SPEED INVASION",type:"Runner",count:90,color:"#ffd95e"},
-        {name:"VOID INVASION",type:"Voidling",count:38,color:"#c879ff"}
+        {name:"SWARM INVASION",subtitle:"Een storm van snelle zwermvijanden",types:["Swarm","Runner","Leech"],base:58,color:"#ff6688",reward:1400},
+        {name:"ARMORED LEGION",subtitle:"Tanks en zware beukers rukken op",types:["Tank","Juggernaut","Crusher","Brute"],base:24,color:"#ff9d4d",reward:2200},
+        {name:"VOID BREACH",subtitle:"Teleporteerders en Voidlings vallen aan",types:["Voidling","Teleporter","Phantom","Chaos Beast"],base:42,color:"#c879ff",reward:2000},
+        {name:"SNIPER PROTOCOL",subtitle:"Schutters houden afstand en vuren van ver",types:["Sniper","Shooter","Stormer"],base:34,color:"#ffd95e",reward:1900},
+        {name:"DEMOLITION WAVE",subtitle:"Explosieve vijanden proberen je in te sluiten",types:["Bomber","Pyro","Burner","Executioner"],base:38,color:"#ff7045",reward:2100},
+        {name:"HIVE BREAKOUT",subtitle:"Spawners laten steeds meer eenheden los",types:["Spawner","Swarm Mother","Swarm","Drone"],base:46,color:"#8dff66",reward:2400}
     ];
 
     const ARENA_EVENTS=[
-        {id:"lava",name:"LAVA STORM",color:"#ff542e"},
-        {id:"ice",name:"ICE FIELD",color:"#65eaff"},
-        {id:"electric",name:"ELECTRIC STORM",color:"#b56cff"},
-        {id:"meteor",name:"METEOR ZONE",color:"#ffb347"},
-        {id:"energy",name:"ENERGY FIELD",color:"#65ffb1"}
+        {id:"lava",name:"LAVA ERUPTION",desc:"Blijf uit de gloeiende zone; lava barst in korte salvo's uit.",color:"#ff542e"},
+        {id:"ice",name:"CRYO FIELD",desc:"In het ijsveld beweeg je trager, maar vijanden worden ook afgeremd.",color:"#65eaff"},
+        {id:"electric",name:"LIGHTNING GRID",desc:"Elektrische pulsen raken vijanden in de zone. Blijf alert voor de schokken.",color:"#b56cff"},
+        {id:"meteor",name:"METEOR SHOWER",desc:"Meteoren worden aangekondigd met een rode cirkel. Blijf in beweging.",color:"#ffb347"},
+        {id:"energy",name:"OVERCHARGE FIELD",desc:"Binnen de ring krijg je sneller energie en bonusdamage.",color:"#65ffb1"},
+        {id:"gravity",name:"GRAVITY WELL",desc:"Zware zwaartekracht vertraagt beweging en trekt vijanden naar het midden.",color:"#9c78ff"},
+        {id:"healing",name:"NANO REPAIR ZONE",desc:"Blijf in de zone om HP en schild te herstellen.",color:"#70ffbb"}
     ];
 
+    /* Five real branches. Prerequisites link nodes into a progression rather than a flat list. */
     const TREE=[
-        {id:"treeDamage",name:"PLASMA CORE",desc:"+15% gun damage",cost:800,req:null,apply:()=>player.damageMult*=1.15},
-        {id:"treeFire",name:"INFERNO CORE",desc:"Unlock +2 Fire",cost:1200,req:"treeDamage",apply:()=>{player.gun.mods.fire+=2;}},
-        {id:"treeCrit",name:"CHAOS CORE",desc:"+8% critical chance",cost:1400,req:"treeDamage",apply:()=>player.crit=Math.min(.85,player.crit+.08)},
-        {id:"treeShield",name:"FORCE FIELD",desc:"+150 maximum shield",cost:1000,req:null,apply:()=>{player.maxShield+=150;player.shield=player.maxShield;}},
-        {id:"treeLightning",name:"STORM CORE",desc:"Unlock +2 Lightning",cost:1800,req:"treeCrit",apply:()=>player.gun.mods.lightning+=2},
-        {id:"treeHoming",name:"SEEKER CORE",desc:"Unlock homing shots",cost:2200,req:"treeCrit",apply:()=>{player.homing+=.5;player.gun.mods.homing+=2;}},
-        {id:"treeMeteor",name:"METEOR CORE",desc:"Unlock meteors",cost:2600,req:"treeFire",apply:()=>player.gun.mods.meteor+=2},
-        {id:"treeBlackhole",name:"VOID CORE",desc:"Unlock black holes",cost:3500,req:"treeLightning",apply:()=>player.gun.mods.blackhole+=2},
-        {id:"treeMoney",name:"GOLD CORE",desc:"+35% money gain",cost:1600,req:"treeShield",apply:()=>player.moneyMult*=1.35},
-        {id:"treeXp",name:"KNOWLEDGE CORE",desc:"+30% XP gain",cost:1600,req:"treeShield",apply:()=>player.xpMult*=1.30},
-        {id:"treeTurret",name:"DEFENSE DRONE",desc:"+1 turret",cost:2800,req:"treeMoney",apply:()=>{player.turretCount++;syncTurrets();}},
-        {id:"treeEndless",name:"ENDLESS ENGINE",desc:"Unlock Endless Mode bonuses",cost:5000,req:"treeBlackhole",apply:()=>{game.score+=5000;}}
+        {id:"treeDamage",branch:"WEAPON",name:"PLASMA CORE",desc:"+20% schade van je hoofdwapen",cost:850,req:null,apply:()=>player.damageMult*=1.20},
+        {id:"treeRapid",branch:"WEAPON",name:"RAPID CYCLER",desc:"Snellere vuursnelheid",cost:1450,req:"treeDamage",apply:()=>player.fireRateMult*=.84},
+        {id:"treeCrit",branch:"WEAPON",name:"CHAOS TARGETING",desc:"+10 procentpunt critkans",cost:1650,req:"treeDamage",apply:()=>player.crit=Math.min(.85,player.crit+.10)},
+        {id:"treePierce",branch:"WEAPON",name:"PENETRATOR",desc:"+2 doorboring voor kogels",cost:2500,req:"treeCrit",apply:()=>player.piercing+=2},
+        {id:"treeGunCore",branch:"WEAPON",name:"GUN EVOLUTION",desc:"Verhoog het level en de basisstats van je hoofdwapen",cost:3200,req:"treeRapid",apply:()=>upgradeMainGun(2)},
+        {id:"treeFire",branch:"ELEMENTS",name:"INFERNO CORE",desc:"Ontgrendel +2 vuur-modificaties",cost:1350,req:null,apply:()=>player.gun.mods.fire+=2},
+        {id:"treeLightning",branch:"ELEMENTS",name:"STORM CORE",desc:"Ontgrendel +2 bliksem-modificaties",cost:2100,req:"treeFire",apply:()=>player.gun.mods.lightning+=2},
+        {id:"treeMeteor",branch:"ELEMENTS",name:"METEOR ENGINE",desc:"+2 meteoor-modificaties",cost:2800,req:"treeLightning",apply:()=>player.gun.mods.meteor+=2},
+        {id:"treeSeeker",branch:"ELEMENTS",name:"SEEKER CORE",desc:"Ontgrendel sterkere homing-kogels",cost:2250,req:"treeFire",apply:()=>{player.homing+=.6;player.gun.mods.homing+=2;}},
+        {id:"treeVoid",branch:"ELEMENTS",name:"VOID SINGULARITY",desc:"+2 black-hole-modificaties",cost:4300,req:"treeMeteor",apply:()=>player.gun.mods.blackhole+=2},
+        {id:"treeShield",branch:"DEFENSE",name:"FORCE FIELD",desc:"+220 maximaal schild en vul het aan",cost:950,req:null,apply:()=>{player.maxShield+=220;player.shield=player.maxShield;}},
+        {id:"treeHealth",branch:"DEFENSE",name:"TITAN VITALS",desc:"+180 maximale HP en herstel die HP",cost:1600,req:"treeShield",apply:()=>{player.maxHp+=180;player.hp=Math.min(player.maxHp,player.hp+180);}},
+        {id:"treeArmor",branch:"DEFENSE",name:"NANO ARMOR",desc:"Verminder inkomende schade met 12%",cost:2500,req:"treeHealth",apply:()=>player.treeDamageReduction=Math.min(.45,(player.treeDamageReduction||0)+.12)},
+        {id:"treeRegen",branch:"DEFENSE",name:"SHIELD REACTOR",desc:"+12 schildregeneratie per seconde",cost:1900,req:"treeShield",apply:()=>player.shieldRegen+=12},
+        {id:"treeNova",branch:"DEFENSE",name:"DASH NOVA",desc:"Dash krijgt een extra explosieve puls",cost:3300,req:"treeArmor",apply:()=>player.dashNova+=1},
+        {id:"treeMoney",branch:"ECONOMY",name:"GOLD CORE",desc:"+35% geld van vijanden en beloningen",cost:1200,req:null,apply:()=>player.moneyMult*=1.35},
+        {id:"treeXP",branch:"ECONOMY",name:"KNOWLEDGE CORE",desc:"+30% XP uit alle bronnen",cost:1300,req:null,apply:()=>player.xpMult*=1.30},
+        {id:"treeBounty",branch:"ECONOMY",name:"BOUNTY CONTRACT",desc:"Nog eens +30% geldopbrengst",cost:2500,req:"treeMoney",apply:()=>player.moneyMult*=1.30},
+        {id:"treeRepair",branch:"ECONOMY",name:"SALVAGE NANITES",desc:"Herstel 1,5 HP per verslagen vijand",cost:2800,req:"treeXP",apply:()=>player.treeKillHeal=(player.treeKillHeal||0)+1.5},
+        {id:"treeTurret",branch:"ECONOMY",name:"DEFENSE DRONE",desc:"Voeg één automatische turret toe",cost:3400,req:"treeBounty",apply:()=>{player.turretCount++;syncTurrets();}},
+        {id:"treeEndless",branch:"ULTIMATE",name:"ENDLESS ENGINE",desc:"Speel de Endless-bonus vrij: vanaf wave 50 +25% schade",cost:4800,req:"treeVoid",apply:()=>{featureState.endlessUnlocked=true;game.score+=5000;}},
+        {id:"treeOverlord",branch:"ULTIMATE",name:"OVERLORD PROTOCOL",desc:"+35% schade tegen bosses",cost:6200,req:"treeEndless",apply:()=>player.bossDamageMultiplier=(player.bossDamageMultiplier||1)*1.35},
+        {id:"treeAscension",branch:"ULTIMATE",name:"ASCENSION CORE",desc:"+25% schade en +20% geld; vereist Endless Engine",cost:8500,req:"treeOverlord",apply:()=>{player.damageMult*=1.25;player.moneyMult*=1.20;}}
+    ];
+    const BRANCHES=[
+        {id:"WEAPON",name:"⚔ WEAPON",hint:"Ruwe schade, crits en vuurtempo"},
+        {id:"ELEMENTS",name:"⚡ ELEMENTS",hint:"Vuur, bliksem, homing en void"},
+        {id:"DEFENSE",name:"🛡 DEFENSE",hint:"HP, schild, armor en dash"},
+        {id:"ECONOMY",name:"💰 ECONOMY",hint:"Meer XP, geld en automatische hulp"},
+        {id:"ULTIMATE",name:"♾ ULTIMATE",hint:"Dure upgrades voor late waves"}
     ];
 
     function treeOwned(id){return !!featureState.treeBought[id];}
+    function updateTreeAccountBar(){
+        const bar=$("treeAccountBar");if(!bar)return;
+        const owned=Object.values(featureState.treeBought).filter(Boolean).length;
+        bar.innerHTML=`<div class="treeStat">GELD <b>$${Math.floor(game.money||0).toLocaleString()}</b></div><div class="treeStat">NODES <b>${owned}/${TREE.length}</b></div><div class="treeStat">WAVE <b>${game.wave}</b></div><div class="treeStat">VOLGENDE UNLOCK <b>${featureState.endlessUnlocked?"ENDLESS READY":"zie vereisten"}</b></div>`;
+    }
     function renderTree(){
-        const grid=$("treeGrid");
-        if(!grid)return;
+        const grid=$("treeGrid");if(!grid)return;
         grid.innerHTML="";
-        for(const n of TREE){
-            const owned=treeOwned(n.id);
-            const locked=n.req && !treeOwned(n.req);
-            const can=!owned && !locked && game.money>=n.cost && game.running;
-            const b=document.createElement("button");
-            b.type="button";
-            b.className="treeNode"+(owned?" owned":"")+(locked?" locked":"");
-            b.disabled=owned||locked;
-            b.innerHTML=`<b>${owned?"✓ ":""}${n.name}</b><span>${n.desc}</span><span class="treeCost">${owned?"ONTGRENDELD":locked?"VEREIST: "+TREE.find(x=>x.id===n.req).name:"$"+n.cost.toLocaleString()}</span>`;
-            b.addEventListener("click",()=>buyTreeNode(n.id));
-            grid.appendChild(b);
+        for(const branch of BRANCHES){
+            const section=document.createElement("section");section.className="treeBranch";
+            const head=document.createElement("h3");head.textContent=branch.name;section.appendChild(head);
+            const hint=document.createElement("div");hint.className="branchHint";hint.textContent=branch.hint;section.appendChild(hint);
+            for(const n of TREE.filter(x=>x.branch===branch.id)){
+                const owned=treeOwned(n.id),req=n.req?TREE.find(x=>x.id===n.req):null,locked=!!(req&&!treeOwned(n.req));
+                const b=document.createElement("button");b.type="button";
+                b.className="treeNode"+(owned?" owned":"")+(locked?" locked":"");
+                b.disabled=owned||locked||!game.running;
+                const status=owned?"✓ GEKOCHT":locked?"🔒 VEREIST: "+(req?req.name:"onbekend"):"$"+n.cost.toLocaleString();
+                b.innerHTML=`<b>${owned?"✓ ":locked?"🔒 ":"◆ "}${n.name}</b><span>${n.desc}</span><span class="treeCost">${status}</span>`;
+                b.addEventListener("click",()=>buyTreeNode(n.id));section.appendChild(b);
+            }
+            grid.appendChild(section);
         }
-        renderHighScores();
+        updateTreeAccountBar();renderHighScores();
+    }
+    function setTreeTab(tab){
+        const scores=tab==="scores";
+        $("treeView").hidden=scores;$("scoreView").hidden=!scores;
+        $("treeTabUpgrade").classList.toggle("active",!scores);$("treeTabScores").classList.toggle("active",scores);
+        $("overlayTitle").textContent=scores?"🏆 HIGH SCORES":"🌳 UPGRADE TREE";
+        $("overlaySubtitle").textContent=scores?"Beste runs op deze browser. Nieuwe records worden aan het einde van een run opgeslagen.":"Vijf upgrade-takken. Koop upgrades met geld en speel sterkere nodes vrij.";
+        if(scores)renderHighScores();else renderTree();
     }
     function buyTreeNode(id){
-        const n=TREE.find(x=>x.id===id);
-        if(!n||treeOwned(id)||!game.running||game.levelChoice)return;
-        if(n.req&&!treeOwned(n.req)){toast("EERST DE VEREISTE UPGRADE");return;}
+        const n=TREE.find(x=>x.id===id);if(!n||treeOwned(id)||!game.running||game.levelChoice)return;
+        if(n.req&&!treeOwned(n.req)){toast("EERST "+TREE.find(x=>x.id===n.req).name+" KOPEN");return;}
         if(game.money<n.cost){toast("NIET GENOEG GELD — $"+n.cost.toLocaleString());return;}
-        game.money-=n.cost;
-        featureState.treeBought[id]=true;
-        n.apply();
-        updateHUD();
-        renderTree();
-        toast("TREE UPGRADE: "+n.name);
+        game.money-=n.cost;featureState.treeBought[id]=true;
+        try{n.apply();}catch(err){featureState.treeBought[id]=false;game.money+=n.cost;console.error(err);toast("Deze upgrade kon niet worden toegepast.");return;}
+        updateHUD();renderTree();burst(player.x,player.y,"#72f5ff",30,190);toast("TREE UPGRADE: "+n.name);
     }
-    function toggleTree(force){
-        const o=$("treeOverlay");
-        if(!o)return;
+    function toggleTree(force,tab="tree"){
+        const o=$("treeOverlay");if(!o)return;
         const open=force===undefined?o.classList.contains("hidden"):force;
         o.classList.toggle("hidden",!open);
-        if(open){game.paused=true;renderTree();}
-        else if(!game.levelChoice&&!game.over){game.paused=false;}
+        if(open){
+            if(!game.running&&tab!=="scores"){toast("Start eerst een run om de tree te gebruiken.");o.classList.add("hidden");return;}
+            if(game.running)game.paused=true;
+            setTreeTab(tab);
+        }
+        else if(game.running&&!game.levelChoice&&!game.over){game.paused=false;}
     }
 
     function startChallenge(){
         if(featureState.challenge)return;
         const c=CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];
         featureState.challenge={...c,start:featureState.runTime,startKills:game.kills,startDamage:0,startHp:player.hp,completed:false};
-        const p=$("challengePanel");
-        p.classList.add("show");
-        $("challengeTitle").textContent="🎯 "+c.name;
-        $("challengeText").textContent=c.desc;
-        $("challengeFill").style.width="0%";
+        const p=$("challengePanel");p.classList.add("show");
+        $("challengeTitle").textContent="🎯 "+c.name;$("challengeText").textContent=c.desc;$("challengeFill").style.width="0%";
         toast("CHALLENGE: "+c.desc);
     }
     function finishChallenge(){
-        const c=featureState.challenge;
-        if(!c||c.completed)return;
-        c.completed=true;
-        const reward=900+game.wave*120;
-        game.money+=Math.floor(reward*player.moneyMult);
-        game.score+=reward*3;
-        gainXP(80+game.wave*6);
-        toast("CHALLENGE VOLTOOID! +$"+Math.floor(reward*player.moneyMult).toLocaleString());
-        burst(player.x,player.y,"#ffe16b",60,300);
-        setTimeout(()=>$("challengePanel").classList.remove("show"),1200);
-        featureState.challenge=null;
+        const c=featureState.challenge;if(!c||c.completed)return;c.completed=true;
+        const reward=900+game.wave*120;const paid=Math.floor(reward*player.moneyMult);
+        game.money+=paid;game.score+=reward*3;gainXP(80+game.wave*6);
+        toast("CHALLENGE VOLTOOID! +$"+paid.toLocaleString());burst(player.x,player.y,"#ffe16b",60,300);
+        featureState.challenge=null;setTimeout(()=>$("challengePanel")?.classList.remove("show"),1200);
     }
     function updateChallenge(dt){
         if(!game.running)return;
-        if(!featureState.challenge){
-            featureState.challengeCooldown-=dt;
-            if(featureState.challengeCooldown<=0 && game.wave>=2){
-                featureState.challengeCooldown=18+Math.random()*18;
-                startChallenge();
-            }
-            return;
-        }
-        const c=featureState.challenge;
-        const elapsed=featureState.runTime-c.start;
-        let progress=0;
-        let done=false;
+        if(!featureState.challenge){featureState.challengeCooldown-=dt;if(featureState.challengeCooldown<=0&&game.wave>=2){featureState.challengeCooldown=18+Math.random()*18;startChallenge();}return;}
+        const c=featureState.challenge,elapsed=featureState.runTime-c.start;let progress=0,done=false;
         if(c.id==="survive"){progress=elapsed/c.target;done=elapsed>=c.target;}
         if(c.id==="untouched"){
-            if(player.hp<c.startHp-0.1){
-                toast("CHALLENGE MISLUKT — je bent geraakt");
-                featureState.challenge=null;$("challengePanel").classList.remove("show");return;
-            }
+            if(player.hp<c.startHp-.1){toast("CHALLENGE MISLUKT — je bent geraakt");featureState.challenge=null;$("challengePanel").classList.remove("show");return;}
             progress=elapsed/c.target;done=elapsed>=c.target;
         }
         if(c.id==="kills"){progress=(game.kills-c.startKills)/c.target;done=game.kills-c.startKills>=c.target;}
         if(c.id==="damage"){progress=c.startDamage/c.target;done=c.startDamage>=c.target;}
         $("challengeFill").style.width=Math.min(100,Math.max(0,progress*100))+"%";
+        $("challengeText").textContent=c.desc+" • "+Math.min(c.target,Math.floor(c.id==="survive"||c.id==="untouched"?elapsed:c.id==="kills"?game.kills-c.startKills:c.startDamage)).toLocaleString()+" / "+c.target.toLocaleString();
         if(done)finishChallenge();
     }
-    function challengeDamage(amount){
-        if(featureState.challenge&&featureState.challenge.id==="damage")featureState.challenge.startDamage+=Math.max(0,amount||0);
-    }
+    function challengeDamage(amount){if(featureState.challenge&&featureState.challenge.id==="damage")featureState.challenge.startDamage+=Math.max(0,amount||0);}
 
     function showInvasion(){
+        if(featureState.invasionActive)return;
         const inv=INVASIONS[Math.floor(Math.random()*INVASIONS.length)];
-        featureState.invasionType=inv.name;
-        featureState.invasionActive=10;
-        const b=$("invasionBanner");
-        b.textContent="⚠ "+inv.name+" ⚠";
-        b.style.color=inv.color;
-        b.classList.add("show");
-        setTimeout(()=>b.classList.remove("show"),1800);
-        for(let i=0;i<inv.count;i++){
-            if(enemies.length>=MAX_ENEMIES)break;
-            const e=spawnEnemy(inv.type);
-            if(e){
-                const a=Math.random()*Math.PI*2;
-                e.x=Math.max(40,Math.min(world.width-40,player.x+Math.cos(a)*(700+Math.random()*900)));
-                e.y=Math.max(40,Math.min(world.height-40,player.y+Math.sin(a)*(700+Math.random()*900)));
-                e.hp*=1.15+game.wave*.012;e.maxHp=e.hp;e.value*=1.5;e.xp*=1.4;
-            }
+        featureState.invasion={...inv};featureState.invasionTotal=inv.base+Math.min(130,game.wave*2);featureState.invasionQueue=featureState.invasionTotal;
+        featureState.invasionSpawned=0;featureState.invasionSpawnTimer=.25;featureState.invasionActive=true;featureState.invasionClearPaid=false;
+        const banner=$("invasionBanner");banner.textContent="⚠ "+inv.name+" ⚠";banner.style.color=inv.color;banner.classList.add("show");
+        setTimeout(()=>banner.classList.remove("show"),2500);
+        const status=$("invasionStatus");status.classList.add("show");status.textContent=inv.subtitle+" — maak je klaar!";
+        toast(inv.name+"! Een vijandengolf komt eraan.");
+    }
+    function spawnInvasionEnemy(){
+        if(!featureState.invasion||featureState.invasionQueue<=0||enemies.length>=MAX_ENEMIES)return false;
+        const inv=featureState.invasion;
+        const type=inv.types[Math.floor(Math.random()*inv.types.length)];
+        const e=spawnEnemy(type);if(!e)return false;
+        const a=Math.random()*Math.PI*2,dist=750+Math.random()*620;
+        e.x=Math.max(e.r+20,Math.min(world.width-e.r-20,player.x+Math.cos(a)*dist));
+        e.y=Math.max(e.r+20,Math.min(world.height-e.r-20,player.y+Math.sin(a)*dist));
+        const scale=1.28+Math.min(1.5,game.wave*.018);
+        e.hp*=scale;e.maxHp=e.hp;e.damage*=1.12+Math.min(.8,game.wave*.008);e.value*=1.45;e.xp*=1.4;
+        e.invasion=true;
+        if(Math.random()<Math.min(.38,.08+game.wave*.006)){e.elite=true;e.hp*=1.7;e.maxHp=e.hp;e.r*=1.1;e.color=inv.color;e.value*=1.6;e.xp*=1.4;}
+        featureState.invasionQueue--;featureState.invasionSpawned++;
+        return true;
+    }
+    function updateInvasion(dt){
+        if(!featureState.invasionActive||!featureState.invasion)return;
+        featureState.invasionSpawnTimer-=dt;
+        let safety=0;
+        while(featureState.invasionQueue>0&&featureState.invasionSpawnTimer<=0&&enemies.length<MAX_ENEMIES&&safety++<8){
+            if(!spawnInvasionEnemy())break;
+            featureState.invasionSpawnTimer+=Math.max(.045,.14-game.wave*.0012);
         }
-        game.score+=inv.count*20;
-        toast(inv.name+"! "+inv.count+" vijanden!");
+        const alive=enemies.reduce((sum,e)=>sum+(e.invasion&&!e.dead?1:0),0);
+        const status=$("invasionStatus");
+        if(status)status.textContent=featureState.invasion.name+" · gespawned "+featureState.invasionSpawned+"/"+featureState.invasionTotal+" · nog "+(featureState.invasionQueue+alive)+" vijanden";
+        if(featureState.invasionQueue<=0&&alive===0&&!featureState.invasionClearPaid){
+            featureState.invasionClearPaid=true;const reward=Math.floor(featureState.invasion.reward*(1+game.wave*.035)*player.moneyMult);
+            game.money+=reward;game.score+=reward*2;featureState.invasionActive=false;
+            if(status){status.textContent="INVASION VERSLAGEN! +$"+reward.toLocaleString();setTimeout(()=>status.classList.remove("show"),2600);}
+            toast("INVASION VERSLAGEN! Bonus: $"+reward.toLocaleString());burst(player.x,player.y,featureState.invasion.color,55,320);featureState.invasion=null;updateHUD();
+        }
     }
 
+    function startEventHazard(x,y,kind="meteor"){
+        const cfg={lava:{r:105,damage:85,color:"#ff542e",label:"LAVA BURST"},meteor:{r:120,damage:115,color:"#ffb347",label:"METEOR"},electric:{r:105,damage:90,color:"#b56cff",label:"ARC STRIKE"},gravity:{r:100,damage:70,color:"#9c78ff",label:"GRAVITY PULSE"}}[kind]||{r:100,damage:75,color:"#ffb347",label:"IMPACT"};
+        featureState.eventHazards.push({x,y,r:cfg.r,damage:cfg.damage+game.wave*3,color:cfg.color,label:cfg.label,life:.95,maxLife:.95,kind});
+    }
     function startArenaEvent(){
-        const ev=ARENA_EVENTS[Math.floor(Math.random()*ARENA_EVENTS.length)];
-        featureState.arenaEvent=ev;
-        featureState.arenaTimer=18;
-        featureState.arenaX=player.x+(Math.random()-.5)*700;
-        featureState.arenaY=player.y+(Math.random()-.5)*500;
-        featureState.arenaR=280+Math.random()*130;
-        toast("🌋 "+ev.name+" — 18 seconden!");
+        const choices=ARENA_EVENTS.filter(ev=>!featureState.arenaEvent||ev.id!==featureState.arenaEvent.id);
+        const ev={...choices[Math.floor(Math.random()*choices.length)]};
+        featureState.arenaEvent=ev;featureState.arenaTimer=24;featureState.arenaX=Math.max(380,Math.min(world.width-380,player.x+(Math.random()-.5)*900));featureState.arenaY=Math.max(350,Math.min(world.height-350,player.y+(Math.random()-.5)*700));
+        featureState.arenaR=330+Math.random()*100;featureState.arenaPulseTimer=1.25;featureState.eventPlayerHitTimer=0;featureState.eventEnemyPulseTimer=1.0;featureState.eventHazards=[];
+        const status=$("eventStatus");status.classList.add("show");status.style.borderColor=ev.color;status.textContent="ARENA EVENT: "+ev.name+" — "+ev.desc;
+        toast("ARENA EVENT: "+ev.name+" · 24 seconden");burst(featureState.arenaX,featureState.arenaY,ev.color,45,250);
     }
     function updateArenaEvent(dt){
-        if(!featureState.arenaEvent){return;}
-        featureState.arenaTimer-=dt;
         const ev=featureState.arenaEvent;
-        const d=Math.hypot(player.x-featureState.arenaX,player.y-featureState.arenaY);
-        if(d<featureState.arenaR){
-            if(ev.id==="lava"||ev.id==="electric") damagePlayer((ev.id==="lava"?24:14)*dt);
-            if(ev.id==="ice") player.speedBonus=Math.max(-50,player.speedBonus-35*dt);
-            if(ev.id==="energy") player.energy=Math.min(player.maxEnergy,player.energy+30*dt);
+        if(!ev){$("eventStatus").classList.remove("show");return;}
+        featureState.arenaTimer-=dt;featureState.arenaPulseTimer-=dt;featureState.eventPlayerHitTimer-=dt;featureState.eventEnemyPulseTimer-=dt;
+        const pd=Math.hypot(player.x-featureState.arenaX,player.y-featureState.arenaY),inside=pd<featureState.arenaR;
+        if(inside){
+            if((ev.id==="lava"||ev.id==="electric")&&featureState.eventPlayerHitTimer<=0){featureState.eventPlayerHitTimer=.8;damagePlayer((ev.id==="lava"?17:12)+game.wave*.7);}
+            if(ev.id==="energy"){player.energy=Math.min(player.maxEnergy,player.energy+23*dt);player.shield=Math.min(player.maxShield,player.shield+10*dt);}
+            if(ev.id==="healing"){player.hp=Math.min(player.maxHp,player.hp+(8+game.wave*.1)*dt);player.shield=Math.min(player.maxShield,player.shield+14*dt);}
+            if(ev.id==="gravity")player.energy=Math.max(0,player.energy-8*dt);
         }
-        if(ev.id==="meteor" && Math.random()<dt*.7){
-            const x=featureState.arenaX+(Math.random()-.5)*featureState.arenaR*1.6;
-            const y=featureState.arenaY+(Math.random()-.5)*featureState.arenaR*1.6;
-            createExplosion(x,y,75,55+game.wave*2,"#ff8c42");
+        if((ev.id==="lava"||ev.id==="meteor")&&featureState.arenaPulseTimer<=0){
+            featureState.arenaPulseTimer=ev.id==="lava"?2.2:1.35;
+            let x,y;
+            if(ev.id==="meteor"){x=player.x+(Math.random()-.5)*Math.min(900,W*.95);y=player.y+(Math.random()-.5)*Math.min(650,H*.9);}
+            else{x=featureState.arenaX+(Math.random()-.5)*featureState.arenaR*1.45;y=featureState.arenaY+(Math.random()-.5)*featureState.arenaR*1.45;}
+            x=Math.max(40,Math.min(world.width-40,x));y=Math.max(40,Math.min(world.height-40,y));startEventHazard(x,y,ev.id);
         }
-        if(featureState.arenaTimer<=0){
-            featureState.arenaEvent=null;
-            toast("ARENA EVENT VOORBIJ");
+        if(ev.id==="electric"&&featureState.eventEnemyPulseTimer<=0){
+            featureState.eventEnemyPulseTimer=1.8;
+            const hits=enemies.filter(e=>!e.dead&&Math.hypot(e.x-featureState.arenaX,e.y-featureState.arenaY)<featureState.arenaR);
+            for(const e of hits)damageEnemy(e,45+game.wave*5,"arenaEvent");
+            if(hits.length)burst(featureState.arenaX,featureState.arenaY,ev.color,20,230);
         }
+        if(ev.id==="gravity"&&featureState.eventEnemyPulseTimer<=0){
+            featureState.eventEnemyPulseTimer=2.2;createExplosion(featureState.arenaX,featureState.arenaY,featureState.arenaR*.92,35+game.wave*3,ev.color,65);
+        }
+        for(let i=featureState.eventHazards.length-1;i>=0;i--){
+            const h=featureState.eventHazards[i];h.life-=dt;
+            if(h.life<=0){
+                createExplosion(h.x,h.y,h.r,h.damage,h.color);
+                const d=Math.hypot(player.x-h.x,player.y-h.y);if(d<h.r+player.r)damagePlayer(30+game.wave*2);
+                featureState.eventHazards.splice(i,1);
+            }
+        }
+        const status=$("eventStatus");if(status)status.textContent=ev.name+" · "+Math.ceil(featureState.arenaTimer)+"s · "+(inside?"JE STAAT IN DE ZONE":"ga naar de ring / vermijd de zone");
+        if(featureState.arenaTimer<=0){featureState.arenaEvent=null;featureState.eventHazards=[];status.classList.remove("show");toast("ARENA EVENT VOORBIJ");}
     }
     function drawArenaEvent(){
-        const ev=featureState.arenaEvent;
-        if(!ev)return;
-        const sx=featureState.arenaX-camera.x, sy=featureState.arenaY-camera.y;
-        ctx.save();
-        ctx.globalAlpha=.18;
-        ctx.fillStyle=ev.color;
-        ctx.beginPath();ctx.arc(sx,sy,featureState.arenaR,0,Math.PI*2);ctx.fill();
-        ctx.globalAlpha=.85;ctx.strokeStyle=ev.color;ctx.lineWidth=5;ctx.beginPath();ctx.arc(sx,sy,featureState.arenaR,0,Math.PI*2);ctx.stroke();
-        ctx.globalAlpha=.95;ctx.fillStyle=ev.color;ctx.font="bold 16px Arial";ctx.textAlign="center";ctx.fillText(ev.name+" • "+Math.ceil(featureState.arenaTimer)+"s",sx,sy-featureState.arenaR-12);
-        if(ev.id==="electric"){
-            for(let i=0;i<8;i++){const a=i*Math.PI/4+featureState.runTime;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+Math.cos(a)*featureState.arenaR,sy+Math.sin(a)*featureState.arenaR);ctx.stroke();}
-        }
+        const ev=featureState.arenaEvent;if(!ev)return;
+        const sx=featureState.arenaX-camera.x,sy=featureState.arenaY-camera.y,r=featureState.arenaR;
+        ctx.save();ctx.globalAlpha=.11;ctx.fillStyle=ev.color;ctx.beginPath();ctx.arc(sx,sy,r,0,Math.PI*2);ctx.fill();
+        ctx.globalAlpha=.86;ctx.strokeStyle=ev.color;ctx.lineWidth=4;ctx.setLineDash([14,8]);ctx.beginPath();ctx.arc(sx,sy,r,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+        ctx.globalAlpha=.45;ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,r*(.7+.06*Math.sin(featureState.runTime*4)),0,Math.PI*2);ctx.stroke();
+        ctx.globalAlpha=1;ctx.fillStyle=ev.color;ctx.font="900 16px Arial";ctx.textAlign="center";ctx.shadowColor=ev.color;ctx.shadowBlur=12;ctx.fillText(ev.name+" · "+Math.ceil(featureState.arenaTimer)+"s",sx,sy-r-12);ctx.shadowBlur=0;
+        if(ev.id==="electric"){for(let i=0;i<10;i++){const a=i*Math.PI/5+featureState.runTime*1.4;ctx.globalAlpha=.6;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+Math.cos(a)*r,sy+Math.sin(a)*r);ctx.stroke();}}
+        if(ev.id==="gravity"){for(let i=1;i<=4;i++){ctx.globalAlpha=.45;ctx.beginPath();ctx.arc(sx,sy,r*i/5+Math.sin(featureState.runTime*3+i)*8,0,Math.PI*2);ctx.stroke();}}
         ctx.restore();
+        for(const h of featureState.eventHazards){const hx=h.x-camera.x,hy=h.y-camera.y,ratio=Math.max(0,h.life/h.maxLife);ctx.save();ctx.globalAlpha=.35+.45*(1-ratio);ctx.strokeStyle=h.color;ctx.fillStyle=h.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(hx,hy,h.r*(1.15-.15*ratio),0,Math.PI*2);ctx.stroke();ctx.globalAlpha=.12+.13*(1-ratio);ctx.beginPath();ctx.arc(hx,hy,h.r,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;ctx.textAlign="center";ctx.font="900 12px Arial";ctx.fillText(h.label+" "+ratio.toFixed(1),hx,hy-h.r-8);ctx.restore();}
     }
 
-    function drawEndlessBanner(){
-        if(!featureState.endless||!game.running)return;
-        ctx.save();ctx.textAlign="center";ctx.font="900 18px Arial";ctx.fillStyle="#ffcf5a";ctx.shadowColor="#ff9d00";ctx.shadowBlur=14;
-        ctx.fillText("♾ ENDLESS MODE • WAVE "+game.wave,W/2,34);ctx.restore();
-    }
+    /* Apply temporary arena effects without permanently changing the player's upgrades. */
+    const baseUpdatePlayer=updatePlayer;
+    updatePlayer=function(dt){
+        const ev=featureState.arenaEvent;const d=ev?Math.hypot(player.x-featureState.arenaX,player.y-featureState.arenaY):Infinity;
+        const old=player.speedBonus; if(ev&&d<featureState.arenaR&&(ev.id==="ice"||ev.id==="gravity"))player.speedBonus=old-(ev.id==="ice"?82:58);
+        try{return baseUpdatePlayer(dt);}finally{player.speedBonus=old;}
+    };
+    const baseUpdateEnemies=updateEnemies;
+    updateEnemies=function(dt){
+        const ev=featureState.arenaEvent;const changed=[];
+        if(ev&&(ev.id==="ice"||ev.id==="gravity")){
+            for(const e of enemies){if(!e.dead&&Math.hypot(e.x-featureState.arenaX,e.y-featureState.arenaY)<featureState.arenaR){changed.push([e,e.speed]);e.speed*=ev.id==="ice"?.55:.72;}}
+        }
+        try{return baseUpdateEnemies(dt);}finally{for(const [e,speed] of changed)e.speed=speed;}
+    };
 
-    /* Damage tracking for challenges. */
-    const originalDamageEnemy=damageEnemy;
-    damageEnemy=function(e,amount,source){
+    /* Damage hooks: challenge tracking, energy field bonus, armor and boss hunter. */
+    const baseDamageEnemy=damageEnemy;
+    damageEnemy=function(e,amount,source=""){
         challengeDamage(amount);
-        return originalDamageEnemy(e,amount,source);
+        let finalAmount=amount;
+        const ev=featureState.arenaEvent;
+        if(e&&ev&&ev.id==="energy"&&Math.hypot(e.x-featureState.arenaX,e.y-featureState.arenaY)<featureState.arenaR)finalAmount*=1.35;
+        if(e&&e.boss&&player.bossDamageMultiplier)finalAmount*=player.bossDamageMultiplier;
+        return baseDamageEnemy(e,finalAmount,source);
+    };
+    const baseDamagePlayer=damagePlayer;
+    damagePlayer=function(amount){
+        const reduction=Math.max(0,Math.min(.6,player.treeDamageReduction||0));
+        return baseDamagePlayer(Math.max(0,amount*(1-reduction)));
+    };
+    const baseKillEnemy=killEnemy;
+    killEnemy=function(e){
+        const wasDead=!e||e.dead;const wasInvasion=!!(e&&!e.dead&&e.invasion);
+        baseKillEnemy(e);
+        if(!wasDead&&wasInvasion&&player.treeKillHeal>0)player.hp=Math.min(player.maxHp,player.hp+player.treeKillHeal);
     };
 
-    /* New wave hooks. */
-    const originalStartWave=startWave;
+    const baseStartWave=startWave;
     startWave=function(n){
-        originalStartWave(n);
-        featureState.lastWave=n;
-        if(n>=50 && !featureState.endless){
-            featureState.endless=true;
-            toast("♾ ENDLESS MODE ON!");
-            burst(player.x,player.y,"#ffcf5a",100,500);
-        }
-        if(n>1 && n%3===0){startArenaEvent();}
-        if(n>1 && n%4===0){showInvasion();}
-        if(n>1 && n%2===0 && !featureState.challenge){startChallenge();}
+        baseStartWave(n);featureState.lastWave=n;
+        if(n>=50&&!featureState.endless){featureState.endless=true;toast("♾ ENDLESS MODE ON — vijanden worden nog sterker!");burst(player.x,player.y,"#ffcf5a",100,500);}
+        if(n>1&&n%3===0)startArenaEvent();
+        if(n>1&&n%4===0)showInvasion();
+        if(n>1&&n%2===0&&!featureState.challenge)startChallenge();
     };
 
-    /* Reset feature state whenever a run starts. */
-    const originalReset=resetGame;
+    const baseReset=resetGame;
     resetGame=function(){
-        featureState.runTime=0;featureState.lastWave=0;featureState.challenge=null;featureState.challengeCooldown=10;featureState.invasionCooldown=12;featureState.invasionActive=0;featureState.arenaEvent=null;featureState.arenaTimer=0;featureState.treeBought={};featureState.endless=false;featureState.endlessBestWave=0;featureState.lastPlayerHp=500;
-        originalReset();
-        renderTree();
-        $("challengePanel").classList.remove("show");
+        featureState.runTime=0;featureState.lastWave=0;featureState.challenge=null;featureState.challengeCooldown=10;
+        featureState.arenaEvent=null;featureState.arenaTimer=0;featureState.eventHazards=[];featureState.eventPlayerHitTimer=0;featureState.eventEnemyPulseTimer=0;
+        featureState.invasion=null;featureState.invasionQueue=0;featureState.invasionSpawned=0;featureState.invasionTotal=0;featureState.invasionActive=false;featureState.invasionClearPaid=false;
+        featureState.treeBought={};featureState.endless=false;featureState.endlessUnlocked=false;featureState.scoreSaved=false;
+        player.treeDamageReduction=0;player.treeKillHeal=0;player.bossDamageMultiplier=1;
+        baseReset();
+        $("challengePanel").classList.remove("show");$("eventStatus").classList.remove("show");$("invasionStatus").classList.remove("show");
+        $("treeOverlay").classList.add("hidden");renderTree();renderHighScores();
     };
+    const baseEndGame=endGame;
+    endGame=function(){if(!game.over)saveScore();baseEndGame();renderHighScores();};
 
-    const originalEnd=endGame;
-    endGame=function(){
-        if(!game.over) saveScore();
-        originalEnd();
-        renderHighScores();
-    };
-
-    /* Wrap update so the new systems actually run. */
-    const originalUpdate=update;
+    const baseUpdate=update;
     update=function(dt){
-        originalUpdate(dt);
+        baseUpdate(dt);
         if(!game.running||game.paused||game.levelChoice||game.over)return;
-        featureState.runTime+=dt;
-        updateChallenge(dt);
-        updateArenaEvent(dt);
-        if(featureState.endless){
-            game.score+=dt*12;
-        }
+        featureState.runTime+=dt;updateChallenge(dt);updateArenaEvent(dt);updateInvasion(dt);
+        if(featureState.endless)game.score+=dt*(featureState.endlessUnlocked?28:12);
+        if(featureState.endless&&featureState.endlessUnlocked){/* extra late-game scaling bonus is applied in damage hook below */}
+        if(!$("treeOverlay").classList.contains("hidden")){updateTreeAccountBar();}
     };
-
-    const originalDraw=draw;
+    const baseDraw=draw;
     draw=function(){
-        originalDraw();
+        baseDraw();
         if(game.running){
             drawArenaEvent();
-            drawEndlessBanner();
+            // Invasion units have a bright outline so they are easy to pick out of the horde.
+            if(featureState.invasionActive){
+                ctx.save();
+                for(const e of enemies){
+                    if(!e.invasion||e.dead)continue;
+                    const x=e.x-camera.x,y=e.y-camera.y;
+                    if(x < -80 || y < -80 || x > W+80 || y > H+80)continue;
+                    ctx.globalAlpha=.8;ctx.strokeStyle=featureState.invasion.color;ctx.lineWidth=e.elite?3:1.7;
+                    ctx.beginPath();ctx.arc(x,y,e.r+(e.elite?8:4),0,Math.PI*2);ctx.stroke();
+                }
+                ctx.restore();
+            }
+            if(featureState.endless){ctx.save();ctx.textAlign="center";ctx.font="900 18px Arial";ctx.fillStyle="#ffcf5a";ctx.shadowColor="#ff9d00";ctx.shadowBlur=14;ctx.fillText("♾ ENDLESS MODE · WAVE "+game.wave,W/2,34);ctx.restore();}
         }
     };
 
-    /* Buttons + keyboard. */
-    $("treeBtn").addEventListener("click",()=>toggleTree());
-    $("closeTree").addEventListener("click",()=>toggleTree(false));
-    $("scoreBtn").addEventListener("click",()=>{
-        const o=$("treeOverlay");o.classList.remove("hidden");game.paused=true;renderHighScores();
-    });
-    addEventListener("keydown",e=>{
-        if(e.key.toLowerCase()==="t"&&game.running&&!game.levelChoice&&!game.over)toggleTree();
-    });
+    /* During Endless, unlocked nodes add a late-run damage multiplier. */
+    const baseDamageEnemyEndless=damageEnemy;
+    damageEnemy=function(e,amount,source=""){
+        let v=amount;if(featureState.endless&&featureState.endlessUnlocked)v*=1.25;
+        return baseDamageEnemy(e,v,source);
+    };
 
-    renderTree();
-    renderHighScores();
+    $("treeBtn").addEventListener("click",()=>toggleTree(undefined,"tree"));
+    $("closeTree").addEventListener("click",()=>toggleTree(false));
+    $("treeTabUpgrade").addEventListener("click",()=>setTreeTab("tree"));
+    $("treeTabScores").addEventListener("click",()=>setTreeTab("scores"));
+    $("scoreBtn").addEventListener("click",()=>toggleTree(true,"scores"));
+    addEventListener("keydown",e=>{
+        if(e.key.toLowerCase()==="t"&&!e.repeat&&!e.ctrlKey&&!e.altKey&&game.running&&!game.levelChoice&&!game.over){e.preventDefault();toggleTree();}
+        if(e.key==="Escape"&&!$("treeOverlay").classList.contains("hidden")){toggleTree(false);}
+    });
+    renderTree();renderHighScores();
 })();
 
 /* ============================================================
